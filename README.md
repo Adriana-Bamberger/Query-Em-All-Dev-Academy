@@ -59,7 +59,7 @@ npm i -D @tanstack/react-query @tanstack/react-query-devtools
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
       <ReactQueryDevtools />
-    <QueryClientProvider />
+    </QueryClientProvider>
   )
   ```
 
