@@ -1,8 +1,10 @@
-# Query 'Em All Workshop
+# Query 'Em All
+
+Practice writing queries with React Query and displaying loading states, error states, and data. We will be using the [Pokémon API](https://pokeapi.co).
 
 ## Setup
 
-### Cloning and Installation
+### 0. Cloning and installation
 
 - [ ] Clone this repo, navigate to it, install packages, and start the server with `npm run dev`
   <details style="padding-left: 2em">
@@ -16,7 +18,7 @@
 
   </details>
 
-### Looking around
+### 1. Looking around
 
 `client/apis/pokemon.ts` is written for you! Take a look at it and then try it out in Insomnia (or Thunder Client) to see what it returns. The types are also written for you in `models/pokemon.ts`, they only contain the fields we are interested in.
 
@@ -27,7 +29,7 @@
 
 Visit [localhost:5173/](http://localhost:5173/) and [localhost:5173/pokemon/bulbasaur](http://localhost:5173/pokemon/bulbasaur), Bulbasaur is currently our only resident Pokémon. We will be replacing the hardcoded data with data from the API.
 
-### Setting up React Query
+### 2. Setting up React Query
 
 - [ ] Install React Query and React Query Devtools
 
@@ -67,27 +69,44 @@ npm i -D @tanstack/react-query @tanstack/react-query-devtools
 
 ---
 
-## Workshop Time!
+## Challenges
 
-### 1. Fetching a List of Pokémon from the API
+### 1. Fetching a list of Pokémon from the API
 
 - [ ] As a user, I want to see a list of the first generation of Pokémon so that I can see what Pokémon there are
 
-- [ ] In `<PokemonList>`, use `useQuery` and `fetchPokemonGeneration` to render a list of Pokémon (just the names)
+  - In `<PokemonList>` use `useQuery` and `fetchPokemonGeneration` to render a list of Pokémon (just the names)
+    <details style="padding-left: 2em">
+      <summary>More about fetching Pokémon</summary>
+      
+      - `fetchPokemonGeneration` takes a `generation` parameter, which is a number between 1 and 9, in this case, we want to fetch the first generation of Pokémon, so we can pass `1`
+      - Check the type in `models/pokemon.ts` a generation is an object with three properties: `{ region: string, name: string, pokemon: PartialPokemon[] }`
+      - `useQuery` takes a key (a string) and a function that returns a promise (`fetchPokemonGeneration`, in this case) and returns an object with a `data` property, which will eventually contain data returned by the promise
+
+    Read more about [keys](https://tanstack.com/query/latest/docs/react/guides/query-keys) and [queries](https://tanstack.com/query/latest/docs/react/guides/queries) in the [React Query docs](https://tanstack.com/query/latest/docs/react).
+    </details>
+
+### 2. Adding a loading state
 
 - [ ] As a user, I want to see a loading state while the list of Pokémon is being fetched so that I know something is happening
-
-- [ ] As a user, if something goes wrong while fetching the list of Pokémon, I want to see an error state so that I know something went wrong
-
 <details style="padding-left: 2em">
-    <summary> STOP! and find another pair</summary>
+  <summary>More about loading states</summary>
   
-    - After implementing the error state, stop and find another pair who has reached the same stage. Share your solutions and discuss any challenges faced.
+  - `useQuery` returns an `isPending` property that you can use to determine when to render a loading state
+  - You can use the `<LoadingSpinner>` component to render a special pokéball loading spinner
 </details>
 
----
+### 3. Adding an error state
 
-### 2. Fetching a Single Pokémon
+- [ ] As a user, if something goes wrong while fetching the list of Pokémon, I want to see an error state so that I know something went wrong
+  <details style="padding-left: 2em">
+    <summary>More about error states</summary>
+
+  - `useQuery` returns an `isError` (true or false), and `error` properties that you can use to render an error state
+
+  </details>
+
+### 4. Fetching a single Pokémon
 
 - [ ] As a user, when I click on a Pokémon in the list, I want to see more information about that Pokémon so that I can learn more about it
 
@@ -101,58 +120,32 @@ npm i -D @tanstack/react-query @tanstack/react-query-devtools
 
   - In `<PokemonDetail>`, add loading and error states
 
-<details style="padding-left: 2em">
-    <summary> STOP! and find another pair</summary>
-  
-    - After implementing the Pokémon detail fetching, stop and find another pair who has reached the same stage. Share your solutions and discuss any challenges faced.
-</details>
-
----
-
-### 3. Adding More Data to `<PokemonDetail>`
+### 5. Adding more data to `<PokemonDetail>`
 
 - [ ] As a user, I want to see more information about the Pokémon so that I can learn more about it
   - In `<PokemonDetail>`, use `console.log` to see what the _actual_ API is returning
   - Choose some fields and add them to the `Pokemon` type in `models/pokemon.ts`
   - In `<PokemonDetail>`, render those new fields in some way of your choosing
 
-<details style="padding-left: 2em">
-    <summary> STOP! and find another pair</summary>
-  
-    - After adding more data to the Pokémon detail, stop and find another pair who has reached the same stage. Share your solutions and discuss any challenges faced.
-</details>
-
 ---
 
-### 4. See Pokémon by generation
+## Stretch
+
+<details>
+  <summary>More about stretch challenges</summary>
 
 - [ ] As a user, on the homepage (`/`) I want to see a list of all the generations, so that I can click on one, go to `/generations/:generationId` and see the list of Pokémon for that generation
 
-<details style="padding-left: 2em">
-    <summary> STOP! and find another pair</summary>
-  
-    - After implementing the error state, stop and find another pair who has reached the same stage. Share your solutions and discuss any challenges faced.
+- [ ] As a user, I want to see a search bar at the top of the page, so that I can search for a Pokémon by name, when I hit enter, I want to be taken to `/search?name=pokemonName`, which should display a filtered list of Pokémon
+
 </details>
-
----
-
-### 5. Stretch - Search for a pokemon
-
-- [ ] As a user, I want to see a search bar at the top of the page, so that I can search for a Pokémon by name, when I hit enter, I want to be taken to `/search?name=pokemonName`, which should display a filtered list of Pokémon.
-- [ ] look up [useSearchParams](https://reactrouter.com/en/main/hooks/use-search-params)
-
-<details style="padding-left: 2em">
-   <summary> STOP! and find another pair</summary>
-  
-    - After implementing the error state, stop and find another pair who has reached the same stage. Share your solutions and discuss any challenges faced.
-</details>
-
----
 
 ## Submitting this Challenge for Marking
 
 This challenge can be used for the following trello assessment(s):
 
 - **WD02: Build a Javascript application that consumes a restful JSON API**
+
+---
 
 [Provide feedback on this repo](https://docs.google.com/forms/d/e/1FAIpQLSfw4FGdWkLwMLlUaNQ8FtP2CTJdGDUv6Xoxrh19zIrJSkvT4Q/viewform?usp=pp_url&entry.1958421517=query-em-all)
