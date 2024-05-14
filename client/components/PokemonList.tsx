@@ -1,27 +1,19 @@
 // import { PokemonGeneration } from '../../models/pokemon.ts'
-import { fetchPokemonGeneration } from '../apis/pokemon.ts'
-import { useQuery } from '@tanstack/react-query'
+import { usePokemon } from '../apis/pokemon.ts'
 import LoadingSpinner from './LoadingSpinner.tsx'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 //fetch pokemon list from api
 
 export default function PokemonList() {
-  const {
-    data: generation,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ['generation'],
-    queryFn: () => fetchPokemonGeneration(1),
-  })
-  if (generation)
+  const { generation } = useParams()
+  const { data, isLoading, isError, error } = usePokemon(generation as string)
+  if (data)
     return (
       <>
         <h1>Got em</h1>
-        <h2>Pokémon in {generation.main_region.name}:</h2>
+        <h2>Pokémon in {data.main_region.name}:</h2>
         <ul>
-          {generation.pokemon_species.map((p) => (
+          {data.pokemon_species.map((p) => (
             <li key={p.name}>
               <Link to={`/pokemon/${p.name}`}>{p.name}</Link>
             </li>

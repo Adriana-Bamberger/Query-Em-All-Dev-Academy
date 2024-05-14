@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import { Pokemon } from '../../models/pokemon.ts'
 import { useQuery } from '@tanstack/react-query'
 import { fetchPokemonByName } from '../apis/pokemon.ts'
 import LoadingSpinner from './LoadingSpinner.tsx'
